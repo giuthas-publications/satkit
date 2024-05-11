@@ -85,11 +85,6 @@ def main() -> None:
 
     perturbations = [-2, -1, -.5, .5, 1, 2]
     # perturbations = [-2, -1, -.5, -.25, .25, .5, 1, 2]
-    annd_call = partial(spline_nnd_metric,
-                        metric=SplineNNDsEnum.ANND,
-                        timestep=1,
-                        notice_base="ISSP 2024 simulation: "
-                        )
     comparisons = [
         Comparison(first='æ', second='æ', perturbed='second'),
         Comparison(first='æ', second='æ', perturbed='first'),
@@ -106,59 +101,35 @@ def main() -> None:
         SoundPair(first='æ', second='i'),
         SoundPair(first='i', second='æ'),
     ]
-    annd_results = calculate_metric_series_for_comparisons(
-        metric=annd_call,
-        contours=contours,
-        comparisons=comparisons,
-        perturbations=perturbations,
-        interleave=True
-    )
-    annd_baselines = get_distance_metric_baselines(
-        metric=annd_call, contours=contours)
 
-    mci_call = partial(spline_shape_metric,
-                       metric=SplineShapesEnum.MODIFIED_CURVATURE,
-                       notice_base="ISSP 2024 simulation: "
-                       )
-    mci_results = calculate_metric_series_for_contours(
-        metric=mci_call,
-        contours=contours,
-        perturbations=perturbations
-    )
-    mci_baselines = get_shape_metric_baselines(
-        metric=mci_call,
-        contours=contours,
-    )
-
-    with PdfPages(save_path/"annd_contours.pdf") as pdf:
-        distance_metric_rays_on_contours(contours=contours,
-                                         metrics=annd_results,
-                                         metric_name="ANND",
-                                         baselines=annd_baselines,
-                                         number_of_perturbations=len(
-                                             perturbations),
-                                         figsize=(10.1, 4.72),
-                                         columns=sound_pairs,
-                                         scale=200,
-                                         color_threshold=[.1, -.1])
-        # plt.show()
-        plt.tight_layout()
-        pdf.savefig(plt.gcf())
-
-    with PdfPages(save_path/"mci_contours.pdf") as pdf:
-        shape_metric_rays_on_contours(contours=contours,
-                                      metrics=mci_results,
-                                      metric_name="MCI/Baseline MCI",
-                                      baselines=mci_baselines,
-                                      number_of_perturbations=len(
-                                          perturbations),
-                                      figsize=(7, 3.35),
-                                      scale=20,
-                                      color_threshold=np.log10([2, .5]))
-        # plt.show()
-        plt.tight_layout()
-        pdf.savefig(plt.gcf())
-
+    # annd_call = partial(spline_nnd_metric,
+    #                     metric=SplineNNDsEnum.ANND,
+    #                     timestep=1,
+    #                     notice_base="ISSP 2024 simulation: "
+    #                     )
+    # annd_results = calculate_metric_series_for_comparisons(
+    #     metric=annd_call,
+    #     contours=contours,
+    #     comparisons=comparisons,
+    #     perturbations=perturbations,
+    #     interleave=True
+    # )
+    # annd_baselines = get_distance_metric_baselines(
+    #     metric=annd_call, contours=contours)
+    # with PdfPages(save_path/"annd_contours.pdf") as pdf:
+    #     distance_metric_rays_on_contours(contours=contours,
+    #                                      metrics=annd_results,
+    #                                      metric_name="ANND",
+    #                                      baselines=annd_baselines,
+    #                                      number_of_perturbations=len(
+    #                                          perturbations),
+    #                                      figsize=(10.1, 4.72),
+    #                                      columns=sound_pairs,
+    #                                      scale=200,
+    #                                      color_threshold=[.1, -.1])
+    #     # plt.show()
+    #     plt.tight_layout()
+    #     pdf.savefig(plt.gcf())
     # with PdfPages(save_path/"annd_1.pdf") as pdf:
     #     make_annd_perturbation_series_plot(annd_dict=annd_results, pdf=pdf)
     # with PdfPages(save_path/"annd_2.pdf") as pdf:
@@ -169,14 +140,67 @@ def main() -> None:
     #                                     contour_2=contours['i'],
     #                                     steps=[1, 2, 5, 10])
 
-    with PdfPages(save_path/"mci_timeseries.pdf") as pdf:
-        perturbations = [-2, -1, -.5, .5, 1, 2]
-        mci_perturbation_series_plot(contours=contours,
-                                     perturbations=perturbations,
-                                     figsize=(12, 8))
-        # plt.show()
+    ci_call = partial(spline_shape_metric,
+                      metric=SplineShapesEnum.CURVATURE,
+                      notice_base="ISSP 2024 simulation: "
+                      )
+    ci_results = calculate_metric_series_for_contours(
+        metric=ci_call,
+        contours=contours,
+        perturbations=perturbations
+    )
+    ci_baselines = get_shape_metric_baselines(
+        metric=ci_call,
+        contours=contours,
+    )
+    with PdfPages(save_path/"ci_contours.pdf") as pdf:
+        shape_metric_rays_on_contours(contours=contours,
+                                      metrics=ci_results,
+                                      metric_name="CI/Baseline CI",
+                                      baselines=ci_baselines,
+                                      number_of_perturbations=len(
+                                          perturbations),
+                                      figsize=(7, 3.35),
+                                      scale=20,
+                                      color_threshold=np.log10([2, .5]))
+        plt.show()
         # plt.tight_layout()
-        pdf.savefig(plt.gcf())
+        # pdf.savefig(plt.gcf())
+
+    # mci_call = partial(spline_shape_metric,
+    #                    metric=SplineShapesEnum.MODIFIED_CURVATURE,
+    #                    notice_base="ISSP 2024 simulation: "
+    #                    )
+    # mci_results = calculate_metric_series_for_contours(
+    #     metric=mci_call,
+    #     contours=contours,
+    #     perturbations=perturbations
+    # )
+    # mci_baselines = get_shape_metric_baselines(
+    #     metric=mci_call,
+    #     contours=contours,
+    # )
+    # with PdfPages(save_path/"mci_contours.pdf") as pdf:
+    #     shape_metric_rays_on_contours(contours=contours,
+    #                                   metrics=mci_results,
+    #                                   metric_name="MCI/Baseline MCI",
+    #                                   baselines=mci_baselines,
+    #                                   number_of_perturbations=len(
+    #                                       perturbations),
+    #                                   figsize=(7, 3.35),
+    #                                   scale=20,
+    #                                   color_threshold=np.log10([2, .5]))
+    #     # plt.show()
+    #     plt.tight_layout()
+    #     pdf.savefig(plt.gcf())
+    # with PdfPages(save_path/"mci_timeseries.pdf") as pdf:
+    #     perturbations = [-2, -1, -.5, .5, 1, 2]
+    #     mci_perturbation_series_plot(contours=contours,
+    #                                  perturbations=perturbations,
+    #                                  figsize=(12, 8))
+    #     # plt.show()
+    #     # plt.tight_layout()
+    #     pdf.savefig(plt.gcf())
 
 
 if __name__ == '__main__':
