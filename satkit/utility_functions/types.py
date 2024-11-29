@@ -47,7 +47,7 @@ def is_sequence_form(obj: Any) -> bool:
 
     Parameters
     ----------
-    object : Any
+    obj : Any
         any object
 
     Returns
