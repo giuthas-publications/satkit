@@ -50,9 +50,9 @@ from satkit.save_and_load import load_recording_session
 _logger = logging.getLogger('satkit.load_or_import')
 
 
-def load_data(path: Path, configuration: Configuration) -> Session:
+def load_or_import_data(path: Path, configuration: Configuration) -> Session:
     """
-    Load data from individual files or a previously saved session.
+    Import data from individual files or load a previously saved session.
 
     Parameters
     ----------
@@ -77,10 +77,10 @@ def load_data(path: Path, configuration: Configuration) -> Session:
             'File or directory does not exist: %s.', path)
         _logger.critical('Exiting.')
         sys.exit()
+    elif path.suffix == SatkitSuffix.META:
+        session = load_recording_session(path)
     elif path.is_dir():
         session = read_recording_session_from_dir(path)
-    elif path.suffix == '.satkit_meta':
-        session = load_recording_session(path)
     else:
         _logger.error(
             'Unsupported filetype: %s.', path)

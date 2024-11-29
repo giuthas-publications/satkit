@@ -57,6 +57,7 @@ from satkit.configuration import (
     apply_exclusion_list, DataRunConfig, load_exclusion_list
 )
 from satkit.data_structures import Session
+from satkit.load_or_import import load_or_import_data
 from satkit.metrics import (
     add_aggregate_images, add_distance_matrices, add_pd, add_spline_metric,
     downsample_metrics
@@ -66,7 +67,7 @@ from satkit.qt_annotator import PdQtAnnotator
 from satkit.scripting_interface import (
     # Operation,
     SatkitArgumentParser,
-    load_data,  # multi_process_data,
+    # multi_process_data,
     process_modalities, process_statistics_in_recordings,
     save_data
 )
@@ -177,7 +178,7 @@ def main():
     exclusion_list = None
     if cli.args.exclusion_filename:
         exclusion_list = load_exclusion_list(cli.args.exclusion_filename)
-    session = load_data(Path(cli.args.load_path), configuration=configuration)
+    session = load_or_import_data(Path(cli.args.load_path), configuration=configuration)
     apply_exclusion_list(session, exclusion_list=exclusion_list)
 
     log_elapsed_time()

@@ -311,6 +311,7 @@ def load_recording_session(
     Session
         The loaded Session object.
     """
+    # TODO: deal with `directory` being the satkit meta file
     if isinstance(directory, str):
         directory = Path(directory)
 
