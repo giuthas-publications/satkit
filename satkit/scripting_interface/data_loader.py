@@ -40,7 +40,7 @@ from pathlib import Path
 from satkit.audio_processing import MainsFilter
 from satkit.configuration import Configuration, PathStructure
 from satkit.constants import (
-    Datasource, SourceSuffix, SatkitSuffix, SatkitConfigFile)
+    DatasourceNames, SourceSuffix, SatkitSuffix, SatkitConfigFile)
 from satkit.data_import import (
     generate_aaa_recording_list, load_session_config)
 from satkit.data_structures import (
@@ -122,7 +122,7 @@ def read_recording_session_from_dir(
         paths, session_config = load_session_config(
             recorded_data_path, session_config_path)
 
-        if session_config.data_source == Datasource.AAA:
+        if session_config.data_source_name == DatasourceNames.AAA:
 
             recordings = generate_aaa_recording_list(
                 directory=recorded_data_path,
@@ -133,7 +133,7 @@ def read_recording_session_from_dir(
                 file_info=file_info, recordings=recordings)
             return session
 
-        if session_config.data_source == Datasource.RASL:
+        if session_config.data_source_name == DatasourceNames.RASL:
             raise NotImplementedError(
                 "Loading RASL data hasn't been implemented yet.")
 
@@ -141,7 +141,7 @@ def read_recording_session_from_dir(
         recordings = generate_aaa_recording_list(recorded_data_path)
 
         paths = PathStructure(root=recorded_data_path)
-        session_config = SessionConfig(data_source=Datasource.AAA)
+        session_config = SessionConfig(data_source=DatasourceNames.AAA)
 
         session = Session(
             name=containing_dir, paths=paths, config=session_config,

@@ -39,7 +39,7 @@ from typing import Union
 
 from pydantic import BaseModel, DirectoryPath
 
-from satkit.constants import Datasource, SavedObjectTypes
+from satkit.constants import DatasourceNames, SavedObjectTypes
 from satkit.data_structures import RecordingMetaData
 from satkit.metrics import (SplineDiffsEnum, SplineNNDsEnum, SplineShapesEnum)
 
@@ -108,7 +108,7 @@ class SessionParameterLoadSchema(BaseModel):
     Session is defined in the data_structures module.
     """
     path: DirectoryPath
-    datasource: Datasource
+    datasource: DatasourceNames
 
 
 class SessionLoadSchema(BaseModel):

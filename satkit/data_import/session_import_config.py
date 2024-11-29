@@ -44,7 +44,7 @@ from strictyaml import (Map, Optional,
 
 from satkit.configuration import (
     PathStructure, PathValidator)
-from satkit.constants import Datasource
+from satkit.constants import DatasourceNames
 from satkit.data_structures import SessionConfig
 
 from .spline_import_config import load_spline_config
@@ -61,9 +61,9 @@ class DatasourceValidator(ScalarValidator):
     def validate_scalar(self, chunk):
         if chunk.contents:
             try:
-                return Datasource(chunk.contents)
+                return DatasourceNames(chunk.contents)
             except ValueError:
-                values = [ds.value for ds in Datasource]
+                values = [ds.value for ds in DatasourceNames]
                 print(
                     f"Error. Only following values for data source are"
                     f"recognised: {str(values)}")

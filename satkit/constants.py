@@ -96,13 +96,13 @@ class CoordinateSystems(Enum):
     POLAR = 'polar'
 
 
-class Datasource(Enum):
+class DatasourceNames(Enum):
     """
-    Data sources SATKIT can handle.
+    Names of data sources SATKIT can handle.
 
     Used in saving and loading to identify the data source in config, as well
-    as in meta and skip the step of trying to figure the data source out from
-    the type of files present.
+    as in meta. Used to skip the step of trying to figure the data source out
+    from the type of files present.
     """
     AAA = "AAA"
     # EVA = "EVA"

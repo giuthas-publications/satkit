@@ -39,7 +39,7 @@ from pathlib import Path
 
 # Local packages
 from satkit.configuration import PathStructure
-from satkit.constants import Datasource, SourceSuffix
+from satkit.constants import DatasourceNames, SourceSuffix
 from satkit.data_structures import (
     FileInformation, Recording, Session, SessionConfig)
 
@@ -206,6 +206,6 @@ def add_modalities(
                       preload=wav_preload,
                       detect_beep=detect_beep)
             add_aaa_raw_ultrasound(recording, ult_preload)
-            add_video(recording, video_preload, Datasource.AAA)
+            add_video(recording, video_preload, DatasourceNames.AAA)
 
     add_splines(recording_list, directory)

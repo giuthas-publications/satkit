@@ -41,7 +41,7 @@ from pydantic import PositiveInt
 
 from satkit.configuration import PointAnnotationParams
 from satkit.configuration import ExclusionList, SplineConfig
-from satkit.constants import AnnotationType, Datasource
+from satkit.constants import AnnotationType, DatasourceNames
 from satkit.external_class_extensions import SatkitBaseModel
 from satkit.utility_functions.types import is_sequence_form
 
@@ -220,7 +220,7 @@ class SessionConfig(SatkitBaseModel):
     """
     Description of a Session for import into SATKIT.
     """
-    data_source: Datasource
+    data_source_name: DatasourceNames
     exclusion_list: ExclusionList | None = None
     spline_config: SplineConfig | None = None
 

@@ -49,7 +49,7 @@ import numpy as np
 from pydantic import conlist
 
 from satkit.constants import (
-    CoordinateSystems, Datasource,
+    CoordinateSystems, DatasourceNames,
     IntervalBoundary, IntervalCategory,
     SplineDataColumn, SplineMetaColumn
 )
