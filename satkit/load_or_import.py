@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-Import a Session from a directory or call the loader for previously saved data.
+Import or load a Session from a directory.
 """
 
 import logging
@@ -47,15 +47,12 @@ from satkit.data_structures import (
     FileInformation, Session, SessionConfig)
 from satkit.save_and_load import load_recording_session
 
-logger = logging.getLogger('satkit.scripting')
-
-# TODO 1.0: change the name of this file to data_importer and move it to a more
-# appropriate submodule.
+_logger = logging.getLogger('satkit.load_or_import')
 
 
 def load_data(path: Path, configuration: Configuration) -> Session:
     """
-    Handle loading data from individual files or a previously saved session.
+    Load data from individual files or a previously saved session.
 
     Parameters
     ----------
@@ -76,16 +73,16 @@ def load_data(path: Path, configuration: Configuration) -> Session:
         MainsFilter.generate_mains_filter(44100, 50)
 
     if not path.exists():
-        logger.critical(
+        _logger.critical(
             'File or directory does not exist: %s.', path)
-        logger.critical('Exiting.')
+        _logger.critical('Exiting.')
         sys.exit()
     elif path.is_dir():
         session = read_recording_session_from_dir(path)
     elif path.suffix == '.satkit_meta':
         session = load_recording_session(path)
     else:
-        logger.error(
+        _logger.error(
             'Unsupported filetype: %s.', path)
         sys.exit()
 
@@ -148,5 +145,5 @@ def read_recording_session_from_dir(
             file_info=file_info, recordings=recordings)
         return session
 
-    logger.error(
+    _logger.error(
         'Could not find a suitable importer: %s.', recorded_data_path)
