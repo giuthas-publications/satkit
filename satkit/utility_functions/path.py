@@ -30,12 +30,24 @@
 # citations.bib in BibTeX format.
 #
 """
-General purpose utility functions.
+Path helper functions.
 """
 
-from .computational import (
-    cartesian_to_polar, polar_to_cartesian, mean_squared_error,
-    normalise_timeseries)
-from .path import path_from_name
-from .processing_helpers import camel_to_snake, product_dict
-from .types import is_sequence_form
+from pathlib import Path
+
+
+def path_from_name(filename: str | Path) -> Path:
+    """
+    Ensure the output is a Path instance.
+
+    Parameters
+    ----------
+    filename : str | Path
+        The filename can be either string or Path.
+    Returns
+    -------
+        Output is always a Path instance.
+    """
+    if not isinstance(filename, Path):
+        return Path(filename)
+    return filename

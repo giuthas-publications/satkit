@@ -43,18 +43,13 @@ from satkit.constants import SATKIT_VERSION
 from satkit.data_structures import FileInformation, Recording, Session
 from satkit.metrics import AggregateImageParameters, DistanceMatrixParameters
 from satkit.save_and_load import nested_text_converters
+from satkit.utility_functions import path_from_name
 
 _logger = logging.getLogger('satkit.export')
 
 
-def _path_from_name(filename: str | Path) -> Path:
-    if not isinstance(filename, Path):
-        return Path(filename)
-    return filename
-
-
 def _paths_from_name(filename: str | Path) -> tuple[Path, Path]:
-    path = _path_from_name(filename)
+    path = path_from_name(filename)
     return path, path.with_suffix('.txt')
 
 
