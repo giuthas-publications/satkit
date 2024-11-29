@@ -50,11 +50,7 @@ class Configuration:
     Main configuration class of SATKIT.    
     """
 
-    # TODO
-    # - reload
-
-    # TODO: implement an update method as well
-    # as save functionality.
+    # TODO: implement save functionality.
 
     def __init__(
             self,
@@ -75,20 +71,25 @@ class Configuration:
         self._main_config_yaml = load_main_config(configuration_file)
         self._main_config = MainConfig(**self._main_config_yaml.data)
 
-        self._data_run_yaml = load_run_params(
-            self._main_config.data_run_parameter_file)
-        self._data_run_config = DataRunConfig(**self._data_run_yaml.data)
-
         self._gui_yaml = load_gui_params(self._main_config.gui_parameter_file)
         self._gui_config = GuiConfig(**self._gui_yaml.data)
 
+        if self._main_config.data_run_parameter_file is not None:
+            self._data_run_yaml = load_run_params(
+                self._main_config.data_run_parameter_file)
+            self._data_run_config = DataRunConfig(**self._data_run_yaml.data)
+        else:
+            self._data_run_config = None
+
+        if self._main_config.publish_parameter_file is not None:
+            self._publish_yaml = load_publish_params(
+                self._main_config.publish_parameter_file)
+            self._publish_config = PublishConfig(**self._publish_yaml.data)
+        else:
+            self._publish_config = None
+
         # self._plot_yaml = load_plot_params(config['plotting_parameter_file'])
         # self._plot_config = PlotConfig(**self._plot_yaml.data)
-
-        self._publish_yaml = load_publish_params(
-            self._main_config.publish_parameter_file)
-        # ic(self._publish_yaml.data)
-        self._publish_config = PublishConfig(**self._publish_yaml.data)
 
     def __repr__(self) -> str:
         return (
@@ -104,9 +105,17 @@ class Configuration:
         return self._main_config
 
     @property
-    def data_run_config(self) -> DataRunConfig:
+    def data_run_config(self) -> DataRunConfig | None:
         """Config options for a data run."""
         return self._data_run_config
+
+    @data_run_config.setter
+    def data_run_config(self, new_config: DataRunConfig) -> None:
+        if isinstance(new_config, DataRunConfig):
+            self._data_run_config = new_config
+        else:
+            raise ValueError(f"Expected a DataRunConfig instance. "
+                             f"Found {new_config.__class__} instead.")
 
     @property
     def gui_config(self) -> GuiConfig:
@@ -114,29 +123,17 @@ class Configuration:
         return self._gui_config
 
     @property
-    def publish_config(self) -> PublishConfig:
+    def publish_config(self) -> PublishConfig | None:
         """Result publishing configuration options."""
         return self._publish_config
 
-    def update_from_file(
-            self, configuration_file: Path | str
-    ) -> None:
-        """
-        Update the configuration from a file.
-
-        Parameters
-        ----------
-        configuration_file : Union[Path, str]
-            File to read the new options from.
-
-        Raises
-        ------
-        NotImplementedError
-            This hasn't been implemented yet.
-        """
-        raise NotImplementedError(
-            "Updating configuration from a file has not yet been implemented.")
-        # main_config.update(**config_dict)
+    @publish_config.setter
+    def publish_config(self, new_config: PublishConfig) -> None:
+        if isinstance(new_config, PublishConfig):
+            self._data_run_config = new_config
+        else:
+            raise ValueError(f"Expected a PublishConfig instance. "
+                             f"Found {new_config.__class__} instead.")
 
     def save_to_file(
             self, file: Path | str
@@ -146,7 +143,7 @@ class Configuration:
 
         Parameters
         ----------
-        file : Union[Path, str]
+        file : Path | str
             File to save to.
 
         Raises
@@ -156,3 +153,96 @@ class Configuration:
         """
         raise NotImplementedError(
             "Saving configuration to a file has not yet been implemented.")
+
+    def update_data_run_from_file(self, configuration_file: Path | str) -> None:
+        """
+        Update the data run configuration from a file.
+
+        Parameters
+        ----------
+        configuration_file : Path | str
+            File to read the new options from.
+        """
+        self._data_run_yaml = load_run_params(filepath=configuration_file)
+        if self._data_run_config is None:
+            self._data_run_config = DataRunConfig(**self._data_run_yaml.data)
+        else:
+            self._data_run_config.update(self._data_run_yaml.data)
+
+    def update_publish_from_file(self, configuration_file: Path | str) -> None:
+        """
+        Update the publish configuration from a file.
+
+        Parameters
+        ----------
+        configuration_file : Path | str
+            File to read the new options from.
+        """
+        self._publish_yaml = load_publish_params(filepath=configuration_file)
+        if self._publish_config is None:
+            self._publish_config = DataRunConfig(**self._publish_yaml.data)
+        else:
+            self._publish_config.update(self._publish_yaml.data)
+
+    def update_gui_from_file(self, configuration_file: Path | str) -> None:
+        """
+        Update the GUI configuration from a file.
+
+        Parameters
+        ----------
+        configuration_file : Path | str
+            File to read the new options from.
+        """
+        self._gui_yaml = load_publish_params(filepath=configuration_file)
+        if self._gui_config is None:
+            self._gui_config = DataRunConfig(**self._gui_yaml.data)
+        else:
+            self._gui_config.update(self._gui_yaml.data)
+
+    def update_main_from_file(self, configuration_file: Path | str) -> None:
+        """
+        Update the main configuration from a file.
+
+        This does not update the other configuration members. To do that either
+        call the individual update methods or run
+        `Configuration.update_all_from_file`.
+
+        Parameters
+        ----------
+        configuration_file : Path | str
+            File to read the new options from.
+        """
+        self._main_config_yaml = load_publish_params(
+            filepath=configuration_file)
+        if self._main_config is None:
+            self._main_config = DataRunConfig(**self._main_config_yaml.data)
+        else:
+            self._main_config.update(self._main_config_yaml.data)
+
+    def update_all_from_file(
+            self, configuration_file: Path | str
+    ) -> None:
+        """
+        Update the configuration from a file.
+
+        This first updates the main configuration and then recursively updates
+        the other configuration members.
+        
+        NOTE: comment round tripping maybe/will be broken by running any of the
+        update methods.
+
+        Parameters
+        ----------
+        configuration_file : Path | str
+            File to read the new options from.
+        """
+        self.update_main_from_file(configuration_file)
+        self.update_gui_from_file(self._main_config.gui_parameter_file)
+        if self.main_config.data_run_parameter_file is not None:
+            self.update_data_run_from_file(
+                self.main_config.data_run_parameter_file
+            )
+        if self.main_config.publish_parameter_file is not None:
+            self.update_publish_from_file(
+                self._main_config.publish_parameter_file
+            )
