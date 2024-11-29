@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 from .argument_parser import SatkitArgumentParser
-from .data_loader import load_data
+from .load_or_import import load_data
 from .data_processor import (
     Operation, multi_process_data, process_modalities,
     process_statistics_in_recordings
