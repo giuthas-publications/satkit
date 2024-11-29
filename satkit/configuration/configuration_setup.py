@@ -41,6 +41,7 @@ from .configuration_parsers import (
 from .configuration_models import (
     GuiConfig, MainConfig, DataRunConfig, PublishConfig
 )
+from ..utility_functions import path_from_name
 
 _logger = logging.getLogger('satkit.configuration_setup')
 
@@ -136,14 +137,14 @@ class Configuration:
                              f"Found {new_config.__class__} instead.")
 
     def save_to_file(
-            self, file: Path | str
+            self, filename: Path | str
     ) -> None:
         """
         Save configuration to a file.
 
         Parameters
         ----------
-        file : Path | str
+        filename : Path | str
             File to save to.
 
         Raises
@@ -151,6 +152,12 @@ class Configuration:
         NotImplementedError
             This hasn't been implemented yet.
         """
+        # filename = path_from_name(filename)
+        # with open(filename, 'w') as file:
+        # TODO: the problem here is that we can't write Configuration to a
+        #   single file.
+        #     file.write(self)
+
         raise NotImplementedError(
             "Saving configuration to a file has not yet been implemented.")
 
@@ -171,7 +178,7 @@ class Configuration:
 
     def update_publish_from_file(self, configuration_file: Path | str) -> None:
         """
-        Update the publish configuration from a file.
+        Update the publishing configuration from a file.
 
         Parameters
         ----------
