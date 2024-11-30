@@ -312,6 +312,9 @@ def load_recording_session(
         The loaded Session object.
     """
     # TODO: deal with `directory` being the satkit meta file
+
+    # TODO: load_or_import and this function should have clearer split of
+    # responsibilities
     if isinstance(directory, str):
         directory = Path(directory)
 
