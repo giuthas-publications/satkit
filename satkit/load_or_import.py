@@ -37,8 +37,7 @@ import logging
 import sys
 from pathlib import Path
 
-from satkit.audio_processing import MainsFilter
-from satkit.configuration import Configuration, PathStructure
+from satkit.configuration import PathStructure
 from satkit.constants import (
     DatasourceNames, SourceSuffix, SatkitSuffix, SatkitConfigFile)
 from satkit.data_import import (
@@ -50,7 +49,7 @@ from satkit.save_and_load import load_recording_session
 _logger = logging.getLogger('satkit.load_or_import')
 
 
-def load_or_import_data(path: Path, configuration: Configuration) -> Session:
+def load_or_import_data(path: Path) -> Session:
     """
     Import data from individual files or load a previously saved session.
 
@@ -58,8 +57,7 @@ def load_or_import_data(path: Path, configuration: Configuration) -> Session:
     ----------
     path : Path
         Directory or SATKIT metafile to read the Session from.
-    configuration : Configuration
-        Satkit configuration.
+
     Returns
     -------
     Session
@@ -112,20 +110,23 @@ def read_recording_session_from_dir(
         paths, session_config = load_session_config(
             recorded_data_path, session_config_path)
 
-        if session_config.data_source_name == DatasourceNames.AAA:
+        match session_config.data_source_name:
+            case DatasourceNames.AAA:
+                recordings = generate_aaa_recording_list(
+                    directory=recorded_data_path,
+                    import_config=session_config)
 
-            recordings = generate_aaa_recording_list(
-                directory=recorded_data_path,
-                import_config=session_config)
-
-            session = Session(
-                name=containing_dir, paths=paths, config=session_config,
-                file_info=file_info, recordings=recordings)
-            return session
-
-        if session_config.data_source_name == DatasourceNames.RASL:
-            raise NotImplementedError(
-                "Loading RASL data hasn't been implemented yet.")
+                session = Session(
+                    name=containing_dir, paths=paths, config=session_config,
+                    file_info=file_info, recordings=recordings)
+                return session
+            case DatasourceNames.RASL:
+                raise NotImplementedError(
+                    "Loading RASL data hasn't been implemented yet.")
+            case _:
+                raise NotImplementedError(
+                    f"Unrecognised data source: "
+                    f"{session_config.data_source_name}")
 
     if list(recorded_data_path.glob('*' + SourceSuffix.AAA_ULTRA)):
         recordings = generate_aaa_recording_list(recorded_data_path)
