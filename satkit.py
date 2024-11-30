@@ -44,12 +44,13 @@ from pathlib import Path
 # For running a Qt GUI
 from PyQt5 import QtWidgets
 
+import satkit.configuration as config
 from satkit import log_elapsed_time, set_logging_level
 from satkit.annotations import (
     add_peaks  # , count_number_of_peaks, nearest_neighbours_in_downsampling,
     # prominences_in_downsampling
 )
-import satkit.configuration as config
+from satkit.argument_parser import SatkitArgumentParser
 from satkit.audio_processing import MainsFilter
 
 from satkit.configuration import (
@@ -63,12 +64,10 @@ from satkit.metrics import (
 )
 from satkit.modalities import RawUltrasound, Splines
 from satkit.qt_annotator import PdQtAnnotator
-from satkit.scripting_interface import (
+from satkit.data_processor import (
     # Operation,
-    SatkitArgumentParser,
     # multi_process_data,
     process_modalities, process_statistics_in_recordings,
-    save_data
 )
 
 
@@ -186,9 +185,7 @@ def main():
     exclusion_list = None
     if cli.args.exclusion_filename:
         exclusion_list = load_exclusion_list(cli.args.exclusion_filename)
-    session = load_or_import_data(
-        path=Path(cli.args.load_path),
-        configuration=configuration)
+    session = load_or_import_data(path=Path(cli.args.load_path))
     apply_exclusion_list(session, exclusion_list=exclusion_list)
 
     log_elapsed_time()
@@ -205,7 +202,9 @@ def main():
 
     # save before plotting just in case.
     if cli.args.output_filename:
-        save_data(Path(cli.args.output_filename), session)
+        logger.critical(
+            "Old style data saving is no longer supported. "
+            "Use 'Save all' in the GUI or implement a better way :^)")
 
     log_elapsed_time()
 
