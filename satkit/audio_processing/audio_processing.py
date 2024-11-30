@@ -29,15 +29,14 @@
 # articles listed in README.markdown. They can also be found in
 # citations.bib in BibTeX format.
 #
-
-# Built in packages
+"""
+Audio processing module.
+"""
 import logging
 
-# Numpy and scipy
 import numpy as np
 from scipy.signal import butter, filtfilt, sosfilt
 from scipy.signal.windows import kaiser
-from icecream import ic
 
 _audio_logger = logging.getLogger('satkit.audio')
 
@@ -47,8 +46,8 @@ def high_pass_50(sampling_frequency):
     filtering the mains frequency away from recorded sound."""
     _audio_logger.debug("Generating high-pass filter.")
     stop = 50/(sampling_frequency/2)  # 50 Hz stop band
-    b, a = butter(10, stop, 'highpass')
-    return (b, a)
+    b, a = butter(N=10, Wn=stop, btype='highpass', output='ba')
+    return b, a
 
 
 def high_pass(sampling_frequency, stop_band):
@@ -56,7 +55,7 @@ def high_pass(sampling_frequency, stop_band):
     filtering the mains frequency away from recorded sound."""
     _audio_logger.debug("Generating high-pass filter.")
     stop = stop_band/(sampling_frequency/2)
-    b, a = butter(10, stop, 'highpass')
+    b, a = butter(N=10, Wn=stop, btype='highpass', output='ba')
     return {'b': b, 'a': a}
 
 
@@ -66,11 +65,11 @@ def band_pass(sampling_frequency):
     nyq = 0.5 * sampling_frequency
     low = 950.0 / nyq
     high = 1050.0 / nyq
-    sos = butter(1, [low, high], btype='band', output='sos')
+    sos = butter(N=1, Wn=[low, high], btype='band', output='sos')
     return sos
 
 
-class MainsFilter():
+class MainsFilter:
     """
     Class for containing a general mains filter.
 
@@ -103,12 +102,12 @@ def detect_beep_and_speech(frames, sampling_frequency, b, a, name):
     """
     Find a 1kHz 50ms beep at the beginning of a sound sample.
 
-    This functions is for processing delayed naming data
+    This function is for processing delayed naming data
     where the go-signal is a 1kHz 50ms beep. The algorithm assumes
     that the signal is the first properly detectable sound in
     the sample and also that it starts with a rising edge.
     The detection is based on locating the first negative
-    valued half wave (the second half wave) and working backwards
+    valued half-wave (the second half-wave) and working backwards
     from that using zero crossings and wave duration to pinpoint
     the onset.
 
@@ -180,7 +179,7 @@ def detect_beep_and_speech(frames, sampling_frequency, b, a, name):
     candidates = np.where(frames[roi_beg:roi_end] < threshold)[0]
     if not len(candidates) > 0:
         _audio_logger.error("Found no beep in %s.", name)
-        return (0, False)
+        return 0, False
     beep_approx_index = roi_beg + candidates[0]
     # beep_approx = int_time[beep_approx_index]
 
@@ -202,4 +201,4 @@ def detect_beep_and_speech(frames, sampling_frequency, b, a, name):
         # if the signal is very very short, there is no speech
         has_speech = False
 
-    return (beep, has_speech)
+    return beep, has_speech
