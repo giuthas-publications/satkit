@@ -38,20 +38,19 @@ This file will be removed when the main method of running SATKIT will move to a
 proper access point.
 """
 
-# built-in modules
 import sys
 from pathlib import Path
 
 # For running a Qt GUI
 from PyQt5 import QtWidgets
 
-# local modules
 from satkit import log_elapsed_time, set_logging_level
 from satkit.annotations import (
     add_peaks  # , count_number_of_peaks, nearest_neighbours_in_downsampling,
     # prominences_in_downsampling
 )
 import satkit.configuration as config
+from satkit.audio_processing import MainsFilter
 
 from satkit.configuration import (
     apply_exclusion_list, DataRunConfig, load_exclusion_list
@@ -169,16 +168,27 @@ def main():
     logger = set_logging_level(cli.args.verbose)
 
     # TODO: this should be done in one:
+    # TODO: in other words: why are these not done in config setup?
     if cli.args.configuration_filename:
         config.parse_config(cli.args.configuration_filename)
     else:
         config.parse_config()
     configuration = config.Configuration(cli.args.configuration_filename)
+    if configuration.main_config.mains_frequency:
+        MainsFilter.generate_mains_filter(
+            sampling_frequency=44100,
+            mains_frequency=configuration.main_config.mains_frequency)
+    else:
+        MainsFilter.generate_mains_filter(
+            sampling_frequency=44100,
+            mains_frequency=50)
 
     exclusion_list = None
     if cli.args.exclusion_filename:
         exclusion_list = load_exclusion_list(cli.args.exclusion_filename)
-    session = load_or_import_data(Path(cli.args.load_path), configuration=configuration)
+    session = load_or_import_data(
+        path=Path(cli.args.load_path),
+        configuration=configuration)
     apply_exclusion_list(session, exclusion_list=exclusion_list)
 
     log_elapsed_time()

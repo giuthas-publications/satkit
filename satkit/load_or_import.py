@@ -65,13 +65,6 @@ def load_or_import_data(path: Path, configuration: Configuration) -> Session:
     Session
         The generated Session object with the exclusion list applied.
     """
-    if configuration.main_config.mains_frequency:
-        MainsFilter.generate_mains_filter(
-            44100,
-            configuration.main_config.mains_frequency)
-    else:
-        MainsFilter.generate_mains_filter(44100, 50)
-
     if not path.exists():
         _logger.critical(
             'File or directory does not exist: %s.', path)
