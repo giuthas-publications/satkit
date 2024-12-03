@@ -1,0 +1,67 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="aY_rg5XHomv6vqqLddOV">
+    <mxGraphModel dx="1434" dy="838" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-1" value="DataObject" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;labelBorderColor=none;fontColor=#CC6600;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="220" height="126" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-2" value="+ meta: Metadata" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-1">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-3" value="+ participants: dict[str, Participant]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-1">
+          <mxGeometry y="52" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-18" value="+ sessions: list[Session]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-1">
+          <mxGeometry y="78" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-4" value="+ sessions: list[Session]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-1">
+          <mxGeometry y="102" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-11" value="" style="endArrow=none;html=1;endSize=12;startArrow=block;startSize=14;startFill=0;edgeStyle=orthogonalEdgeStyle;rounded=0;fontColor=#CC6600;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#999999;endFill=0;" edge="1" parent="1" source="EM2CB-ThnirYC3_ZTbwj-1" target="EM2CB-ThnirYC3_ZTbwj-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="150" as="sourcePoint" />
+            <mxPoint x="350" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-13" value="" style="endArrow=none;html=1;endSize=12;startArrow=block;startSize=14;startFill=0;edgeStyle=orthogonalEdgeStyle;rounded=0;fontColor=#CC6600;strokeColor=#999999;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endFill=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="EM2CB-ThnirYC3_ZTbwj-2" target="EM2CB-ThnirYC3_ZTbwj-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="638" y="190" as="sourcePoint" />
+            <mxPoint x="680" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-19" value="DataAggregator" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;labelBorderColor=none;fontColor=#CC6600;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="710" y="280" width="220" height="126" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-20" value="+ meta: Metadata" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-19">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-21" value="+ participants: dict[str, Participant]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-19">
+          <mxGeometry y="52" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-22" value="+ sessions: list[Session]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-19">
+          <mxGeometry y="78" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-23" value="+ sessions: list[Session]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-19">
+          <mxGeometry y="102" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-24" value="DataContainer" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;labelBorderColor=none;fontColor=#CC6600;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="240" y="280" width="220" height="126" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-25" value="+ meta: Metadata" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-24">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-26" value="+ participants: dict[str, Participant]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-24">
+          <mxGeometry y="52" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-27" value="+ sessions: list[Session]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-24">
+          <mxGeometry y="78" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="EM2CB-ThnirYC3_ZTbwj-28" value="+ sessions: list[Session]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBorderColor=none;fontColor=#CC6600;" vertex="1" parent="EM2CB-ThnirYC3_ZTbwj-24">
+          <mxGeometry y="102" width="220" height="24" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
