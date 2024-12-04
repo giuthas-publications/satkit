@@ -68,14 +68,25 @@ def load_or_import_data(path: Path) -> Session:
             'File or directory does not exist: %s.', path)
         _logger.critical('Exiting.')
         sys.exit()
-    elif path.suffix == SatkitSuffix.META:
-        session = load_recording_session(path)
-    elif path.is_dir():
-        session = read_recording_session_from_dir(path)
-    else:
-        _logger.error(
-            'Unsupported filetype: %s.', path)
-        sys.exit()
+
+    session = None
+    match path.suffix:
+        case SourceSuffix.AAA_ULTRA:
+            session = load_recording_session(path)
+        case SatkitSuffix.CONFIG if path.name == SatkitConfigFile.SATKIT:
+            session = load_recording_session(path)
+        case SatkitSuffix.CONFIG if path.name == SatkitConfigFile.MANIFEST:
+            session = load_recording_session(path)
+        case SatkitSuffix.META:
+            session = load_recording_session(path)
+        case "" if path.is_dir():
+            session = read_recording_session_from_dir(path)
+        case _:
+            # TODO 1.0: consider giving guesses with the error if there are near
+            # misses in file names and such
+            _logger.error(
+                'Unsupported filetype: %s.', path)
+            sys.exit()
 
     for recording in session:
         recording.after_modalities_init()
@@ -97,7 +108,7 @@ def read_recording_session_from_dir(
     """
     containing_dir = recorded_data_path.parts[-1]
 
-    session_config_path = recorded_data_path / SatkitConfigFile.SESSION
+    session_config_path = recorded_data_path / SatkitConfigFile.SATKIT
     session_meta_path = recorded_data_path / (containing_dir + '.Session' +
                                               SatkitSuffix.META)
     if session_meta_path.is_file():

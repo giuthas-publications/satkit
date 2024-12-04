@@ -319,7 +319,7 @@ def load_recording_session(
         directory = Path(directory)
 
     if not session_config_path:
-        session_config_path = directory / SatkitConfigFile.SESSION
+        session_config_path = directory / SatkitConfigFile.SATKIT
 
     filename = f"{directory.parts[-1]}{'.Session'}{SatkitSuffix.META}"
     filepath = directory / filename

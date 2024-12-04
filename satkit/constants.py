@@ -154,7 +154,8 @@ class SatkitConfigFile:
     """
     Human written yaml files to control importing data.
     """
-    SESSION = 'session_config.yaml'
+    SATKIT = 'satkit.yaml'
+    MANIFEST = 'satkit_manifest.yaml'
     SPLINE = 'spline_config.yaml'
 
 
