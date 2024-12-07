@@ -48,6 +48,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   a given metric on the same data with conflicting parameters and save all 
   results for later use.
 - Statistics are now saved along with Modalities and the rest on 'Save all'.
+- Some helpful progress indicators to show how the data run is going.
 
 ## Changed
 
