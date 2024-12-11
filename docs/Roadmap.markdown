@@ -33,6 +33,9 @@
   - For timeseries:
     - [x] automated peak and valley selection on time series
 - [ ] Saving and loading
+  - [ ] Data management model which separates recorded (external data) from
+    derived (SATKIT generated) data, with local config in the filesystem 
+    controlling the system's behaviour
   - [x] TextGrids
     - [x] loading
     - [x] saving
