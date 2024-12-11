@@ -80,6 +80,7 @@ def load_or_import_data(path: Path) -> Session:
         case SatkitSuffix.META:
             session = load_recording_session(path)
         case "" if path.is_dir():
+            #TODO This needs to somewow split into recorded path and satkit path
             session = read_recording_session_from_dir(path)
         case _:
             # TODO 1.0: consider giving guesses with the error if there are near
