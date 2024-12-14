@@ -49,6 +49,14 @@ SATKIT_FILE_VERSION = SATKIT_VERSION
 DEFAULT_ENCODING = 'utf-8'
 
 
+class AxesType(Enum):
+    """
+    Axes types in plotting.
+    """
+    DATA = 'data_axes'
+    TIER = 'tier_axes'
+
+
 class ImageMask(Enum):
     """
     Accepted image masking options in calculating PD.

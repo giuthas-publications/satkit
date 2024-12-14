@@ -390,6 +390,8 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         if ylim is None:
             ylim = (-0.05, 1.05)
 
+        # TODO: this needs to work together with normalisation, maybe this
+        # should in fact live inside of plot_timeseries instead of here?
         y_offset = 0
         if axes_params.y_offset is not None:
             y_offset = axes_params.y_offset
@@ -412,7 +414,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                 self.xlim, ylim,
                 color=colors[i],
                 linestyle=(0, (i + 1, i + 1)),
-                normalise=TimeseriesNormalisation(peak=True, bottom=True),
+                normalise=axes_params.normalisation,
                 y_offset=i * y_offset,
                 sampling_step=i + 1,
                 label=f"{modality.sampling_rate / (i + 1):.2f} Hz"

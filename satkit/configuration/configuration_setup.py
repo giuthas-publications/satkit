@@ -41,7 +41,6 @@ from .configuration_parsers import (
 from .configuration_models import (
     GuiConfig, MainConfig, DataRunConfig, PublishConfig
 )
-from ..utility_functions import path_from_name
 
 _logger = logging.getLogger('satkit.configuration_setup')
 

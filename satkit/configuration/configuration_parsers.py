@@ -41,6 +41,7 @@ import sys
 from contextlib import closing
 from pathlib import Path
 
+from icecream import ic
 # import numpy as np
 from strictyaml import (
     Bool, FixedSeq, Float, Int, Map,
@@ -48,7 +49,7 @@ from strictyaml import (
     UniqueSeq, YAML, YAMLError, load
 )
 
-from satkit.constants import DEFAULT_ENCODING
+from satkit.constants import AxesType, DEFAULT_ENCODING
 
 from .configuration_models import (
     IntervalBoundary, IntervalCategory, TimeseriesNormalisation)
@@ -332,6 +333,7 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
         Optional(
             "colors_in_sequence", default=True): Bool(),
         Optional("sharex"): Bool(),
+        Optional("normalisation"): Str(),
         Optional("mark_peaks"): Bool(),
         Optional("y_offset"): Float(),
     }
@@ -344,12 +346,12 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
                 open(filepath, 'r', encoding=DEFAULT_ENCODING)) as yaml_file:
             schema = Map({
                 "data_and_tier_height_ratios": Map({
-                    "data": Int(),
-                    "tier": Int()
+                    AxesType.DATA: Int(),
+                    AxesType.TIER: Int()
                 }),
                 "general_axes_params": Map({
-                    "data_axes": Map(axes_params_dict),
-                    "tier_axes": Map(axes_params_dict),
+                    AxesType.DATA: Map(axes_params_dict),
+                    AxesType.TIER: Map(axes_params_dict),
                 }),
                 "data_axes": MapPattern(
                     Str(), Map(axes_definition_dict)

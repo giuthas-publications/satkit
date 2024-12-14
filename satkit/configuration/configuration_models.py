@@ -49,7 +49,7 @@ import numpy as np
 from pydantic import conlist
 
 from satkit.constants import (
-    CoordinateSystems, DatasourceNames,
+    AxesType, CoordinateSystems, DatasourceNames,
     IntervalBoundary, IntervalCategory,
     SplineDataColumn, SplineMetaColumn
 )
@@ -389,8 +389,10 @@ class AxesParams(UpdatableBaseModel):
     # the corresponding yaml files
 
     colors_in_sequence: bool = True
+    sharex: bool = True
+    normalisation: TimeseriesNormalisation = TimeseriesNormalisation(
+        peak=True, bottom=True)
     mark_peaks: bool | None = None
-    sharex: bool | None = None
     y_offset: float | None = None
 
 
@@ -404,12 +406,11 @@ class AxesDefinition(AxesParams):
         List of the modalities to be plotted on these axes, by default None
     """
     modalities: list[str] | None = None
-    sharex: bool = True
 
 
 class GuiConfig(UpdatableBaseModel):
     data_and_tier_height_ratios: HeightRatios
-    general_axes_params: AxesParams
+    general_axes_params: dict[AxesType, AxesParams]
     data_axes: dict[str, AxesDefinition]
     pervasive_tiers: list[str]
     xlim: FloatPair | str | None = None
