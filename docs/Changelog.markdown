@@ -28,18 +28,12 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Added
 
 - SATKIT will soon be available on pypi, probably under the long name:
-  speech_articulation_toolkit.
+  speech_analysis_toolkit.
 - See [Roadmap](Roadmap.markdown) for an overview of what to expect in 1.0.
 
-## [0.13.0] needs to be cleaned of merge overlaps below
+## [0.13.0] 2025-01-
 
-### Highlights
-
-- Configuration system now works less globally and more on a study-by-study
-  basis. Local configuration overrides global.
-- Exclusion is defined mainly separately for each operation/metric. This makes
-  it easier to -- among other things -- run several versions of a Session level
-  statistics.
+## Highlights
 
 ## Added
 
@@ -48,33 +42,58 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   a given metric on the same data with conflicting parameters and save all 
   results for later use.
 - Statistics are now saved along with Modalities and the rest on 'Save all'.
-- Some helpful progress indicators to show how the data run is going.
 
 ## Changed
 
-- Per-study or Scenario configuration instead of global configuration.
-- Scenario based results saving too. 
-- Major update to data management and the configuration system. 
-  - Data is now separated to recorded and derived. Former is data originating 
-    from outside sources and treated as immutable, latter is data originating 
-    from SATKIT.
-  - Data run parameters now live with the derived data.
-  - TextGrids can live in both recorded data and derived data, with
-    the derived version overriding recorded. This will have a future application  
-    in generating practice scenarios.
+## Removed
 
+## Fixed
+
+
+## [0.12.0] 2024-12-29
+
+### Highlights
+
+- Experimental interactive workflow. 
+  - Supported by interface and data initialisation being collected into some
+    simple-to-use functions.
+  - Also supported by temporary script file `satkit_interactive.py`.
+    - Runs like `satkit.py` but instead of starting the GUI annotator, starts an 
+      interactive Python session.
+- Exporting data from Modalities into DataFrames for external analysis.
+
+## Added
+
+- Exporting data from modalities into DataFrames for external analysis.
+  - Includes an option of exporting with label info from TextGrids.
+  - Experimentally enabled export of several derived modalities into the same csv
+    file.
+- A script to run SATKIT as an interactive interpreter. 
+  - The same commands can obviously be copy-pasted into an interpreter to get some
+    data loaded and processable in interactive mode.
+- Some helpful progress indicators to show how the data loading is going.
+- Y limits of modality axes and spectrograms can be controlled from the gui
+  parameter file.
+
+## Changed
+
+- A lot of functionality that lived in `satkit.py` is now in regular satkit
+  library functions and in the new `satkit/satkit.py` module.
 
 ### Removed
 
-- Removed the `publish_distance_matrix` and `publish_aggregate_images`
-  functions. The preferred way is to use the export functions which also
-  automatically export the meta data to keep track of where an exported/published
-  image came from.
+- Dismantled the `scripting_interface` submodule.
 
 ### Fixed
 
 - Saving and loading works again.
-- [possibly] the issues in 0.11
+
+### Bugs
+
+- Same as previous versions.
+- Command history does not yet work when running SATKIT as an interactive
+  interpreter with `satkit_interactive.py`.
+
 
 ## [0.11.0] 2024-11-20
 

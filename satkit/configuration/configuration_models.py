@@ -352,6 +352,7 @@ class CastParams(UpdatableBaseModel):
 
 
 class DataRunConfig(UpdatableBaseModel):
+    flags: DataRunFlags
     output_directory: Path | None = None
     aggregate_image_arguments: AggregateImageArguments | None = None
     pd_arguments: PdArguments | None = None
@@ -389,10 +390,11 @@ class AxesParams(UpdatableBaseModel):
     # the corresponding yaml files
 
     colors_in_sequence: bool = True
-    sharex: bool = True
     normalisation: TimeseriesNormalisation = TimeseriesNormalisation(
         peak=True, bottom=True)
     mark_peaks: bool | None = None
+    sharex: bool = True
+    ylim: tuple[float, float] | None = None
     y_offset: float | None = None
 
 
@@ -406,6 +408,11 @@ class AxesDefinition(AxesParams):
         List of the modalities to be plotted on these axes, by default None
     """
     modalities: list[str] | None = None
+
+
+class GeneralAxesParams(UpdatableBaseModel):
+    data_axes: AxesParams | None = None
+    tier_axes: AxesParams | None = None
 
 
 class GuiConfig(UpdatableBaseModel):

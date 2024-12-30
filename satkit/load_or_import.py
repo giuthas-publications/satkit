@@ -96,7 +96,9 @@ def load_or_import_data(path: Path) -> Session:
 
 
 def read_recording_session_from_dir(
-        recorded_data_path: Path) -> Session:
+        recorded_data_path: Path,
+        detect_beep: bool = False
+) -> Session:
     """
     Wrapper for reading data from a directory full of files.
 
@@ -141,7 +143,10 @@ def read_recording_session_from_dir(
                     f"{session_config.data_source_name}")
 
     if list(recorded_data_path.glob('*' + SourceSuffix.AAA_ULTRA)):
-        recordings = generate_aaa_recording_list(recorded_data_path)
+        recordings = generate_aaa_recording_list(
+            directory=recorded_data_path,
+            detect_beep=detect_beep
+        )
 
         paths = PathStructure(root=recorded_data_path)
         session_config = SessionConfig(data_source=DatasourceNames.AAA)

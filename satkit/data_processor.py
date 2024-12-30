@@ -136,3 +136,5 @@ def multi_process_data(
         pool.map(operation.processing_function, arguments)
 
     _logger.info('Data run ended at %s.', str(datetime.datetime.now()))
+
+

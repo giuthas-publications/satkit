@@ -223,7 +223,6 @@ def load_run_params(filepath: Path | str | None = None) -> YAML:
         with closing(
                 open(filepath, 'r', encoding=DEFAULT_ENCODING)) as yaml_file:
             schema = Map({
-                "recorded_data_path": PathValidator(),
                 Optional("output_directory"): PathValidator(),
                 "flags": Map({
                     "detect_beep": Bool(),
@@ -322,7 +321,7 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
     exist, report this and exit.
     """
     if filepath is None:
-        print("Fatal error in loading run parameters: filepath is None")
+        print("Fatal error in loading GUI parameters: filepath is None")
         sys.exit()
     elif isinstance(filepath, str):
         filepath = Path(filepath)
@@ -335,6 +334,7 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
         Optional("sharex"): Bool(),
         Optional("normalisation"): Str(),
         Optional("mark_peaks"): Bool(),
+        Optional("ylim"): FixedSeq([Float(), Float()]),
         Optional("y_offset"): Float(),
     }
 
@@ -397,7 +397,7 @@ def load_publish_params(filepath: Path | str | None = None) -> YAML:
     exist, report this and exit.
     """
     if filepath is None:
-        print("Fatal error in loading run parameters: filepath is None")
+        print("Fatal error in loading publish parameters: filepath is None")
         sys.exit()
     elif isinstance(filepath, str):
         filepath = Path(filepath)

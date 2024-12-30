@@ -31,45 +31,34 @@
 # citations.bib in BibTeX format.
 #
 """
-Current main script for running SATKIT.
-
-DEPRECATION WARNING:
-This file will be removed when the main method of running SATKIT will move to a
-proper access point.
+Experimental interactive interpreter mode
 """
+import code
 
 from satkit import (
-    add_derived_data, initialise_satkit, run_annotator
+    add_derived_data, initialise_satkit
 )
 from satkit.utility_functions import log_elapsed_time
 
 
 def main():
-    """Main to run the CLI and start the GUI."""
+    """Main to initialise SATKIT and start the interactive interpreter."""
 
     cli, configuration, logger, session = initialise_satkit()
     log_elapsed_time(logger)
 
-    add_derived_data(session=session,
-                     config=configuration)
-
-    if configuration.publish_config is not None:
-        # TODO 1.0: This should probably be its own CLI command.
-        logger.info(
-            "Currently publishing from the satkit.py script is disabled.")
-
-    logger.info('Data run ended.')
-
-    # save before plotting just in case.
-    if cli.args.output_filename:
-        logger.critical(
-            "Old style data saving is no longer supported. "
-            "Use 'Save all' in the GUI or implement a better way :^)")
-
+    add_derived_data(session=session, config=configuration)
     log_elapsed_time(logger)
 
-    if cli.args.annotator:
-        run_annotator(session, configuration, cli.args)
+    # TODO 1.0: Probably better doing this with IPython than the history-less
+    # standard library version
+    # import IPython
+    # IPython.embed()
+    code.interact(
+        banner="SATKIT Interactive Console",
+        local=locals(),
+        exitmsg="Exiting SATKIT Interactive Console",
+    )
 
 
 if __name__ == '__main__':
