@@ -35,6 +35,36 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - There will be a feature freeze at this point.
   - The alpha and beta versions will be mainly quality assurance and code clean up.
 
+
+## [0.22.3] - 2026-06-30
+
+### Highlights
+
+- Exercises sharing support.
+
+### Added
+
+- Sharing exercises as zipped bundles
+  - Automated zipping and cleaning
+  - Automated loading from zip 
+  - Automated loading from the web
+
+### Testing
+
+- New tests for: 
+  - Answer cursor saving and loading
+  - Exercise sharing
+  - 
+
+### Documentation
+
+- Updated automated exercise documentation.
+
+### Bugs
+
+- [All Bugs](Bugs.markdown).
+
+
 ## [0.22.2] - 2026-06-26
 
 ### Highlights
