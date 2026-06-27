@@ -416,8 +416,11 @@ class PlotController:
             )
             boundaries_by_axis.append(boundary_set)
             axis.set_ylabel(
-                name, rotation=90, horizontalalignment="center",
-                verticalalignment="center")
+                name,
+                rotation=0,
+                horizontalalignment="center",
+                verticalalignment="center"
+            )
             axis.set_xlim(xlim)
             if name in self.gui_config.pervasive_tiers:
                 for data_axis in self.data_axes:
