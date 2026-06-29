@@ -44,7 +44,7 @@ import numpy as np
 from patkit.data_structures import Recording
 from patkit.configuration import DataConfig, GuiConfig
 from patkit.constants import (
-    AnnotatorMode, DefaultCanvasColors, DefaultCursorColors,
+    AnnotatorMode, ColorPalettes, DefaultCanvasColors, DefaultCursorColors,
     ExerciseMode, GuiColorScheme, GuiImageType
 )
 from patkit.plot_and_publish import (
@@ -136,7 +136,7 @@ class PlotController:
         matplotlib.rcParams.update(
             {'font.size': self.gui_config.default_font_size}
         )
-        plt.style.use('tableau-colorblind10')
+        plt.style.use(ColorPalettes.COLORBLIND_10)
 
     def to_annotator_mode(
         self,
@@ -156,6 +156,7 @@ class PlotController:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
                 )
+        plt.style.use(ColorPalettes.COLORBLIND_10)
 
     def to_exercise_mode(
         self,
@@ -175,6 +176,7 @@ class PlotController:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
                 )
+        plt.style.use(ColorPalettes.COLORBLIND_10)
 
     def to_example_mode(
         self,
@@ -194,6 +196,7 @@ class PlotController:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
                 )
+        plt.style.use(ColorPalettes.COLORBLIND_10)
 
     def to_answer_mode(
         self,
@@ -213,6 +216,7 @@ class PlotController:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
                 )
+        plt.style.use(ColorPalettes.COLORBLIND_10)
 
     def setup_axes(self) -> None:
         """
