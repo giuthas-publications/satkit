@@ -29,7 +29,7 @@ def package_exercise_to_zip(
     include_textgrids : bool, optional
         Whether to include root-level `.TextGrid` files, by default False.
     """
-    with ZipFile(file=zip_path, mode='w', compression=ZIP_DEFLATED) as zip_file:
+    with ZipFile(file=zip_path, mode='w', compression=ZIP_DEFLATED) as output:
         for item in session_path.rglob('*'):
             if not item.is_file():
                 continue
@@ -53,11 +53,11 @@ def package_exercise_to_zip(
                         new_parts = list(rel_path.parts)
                         new_parts[2] = 'answer'
                         arcname = Path(*new_parts)
-                        zip_file.write(filename=item, arcname=arcname)
+                        output.write(filename=item, arcname=arcname)
                     continue  # Skip all other answer directories
 
             # Write all other allowed files
-            zip_file.write(filename=item, arcname=rel_path)
+            output.write(filename=item, arcname=rel_path)
 
 
 def unpackage_exercise_from_zip(
