@@ -76,14 +76,14 @@ from patkit.export import (
 from patkit.gui import (
     AudioPlayer, ImageSaveDialog, ListSaveDialog,
     NewAnswerDialog, NewExerciseDialog,
-    ListSelectionDialog, PlotController,
+    ListSelectionDialog, PackageExerciseDialog, PlotController,
     ReplaceDialog, UiMainWindow,
 )
 from patkit.initialise import initialise_config, initialise_patkit
 from patkit.path_resolution import get_manifest_scenarios, resolve_open_path
 from patkit.save_and_load import (
-    load_answer, save_answer, save_exercise,
-    save_recording_session,
+    load_answer, package_exercise_to_zip, unpackage_exercise_from_zip,
+    save_answer, save_exercise, save_recording_session,
 )
 from patkit.ui_callbacks import UiCallbacks
 
@@ -808,6 +808,81 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
     def save_exercise(self) -> None:
         """Save the active exercise to disk."""
         save_exercise(exercise=self.session.exercise)
+
+    def package_exercise(self) -> None:
+        """
+        Package the active exercise to a zip.
+        """
+        default_name = f"{self.session.name}_exercise.zip"
+        default_path = self.session.patkit_path.parent / default_name
+
+        zip_path, include_grids = PackageExerciseDialog.get_export_params(
+            parent=self,
+            default_path=default_path
+        )
+
+        if zip_path is None:
+            return
+
+        current_answer_name = self.session.exercise.current_answer.name
+
+        package_exercise_to_zip(
+            session_path=self.session.patkit_path,
+            zip_filepath=zip_path,
+            active_answer_name=current_answer_name,
+            include_textgrids=include_grids
+        )
+
+        # TODO: status message instead
+        # QMessageBox.information(
+        #     parent=self,
+        #     title="Export Successful",
+        #     text=f"Exercise successfully exported to:\n{zip_path}"
+        # )
+
+    def open_zipped_exercise(self) -> None:
+        """
+        Prompt the user to extract a zipped exercise and load it.
+        """
+        zip_path_str, _ = QFileDialog.getOpenFileName(
+            parent=self,
+            caption="Open Zipped Exercise",
+            directory=str(Path.cwd()),
+            filter="Zip Files (*.zip)"
+        )
+
+        if not zip_path_str:
+            return
+
+        zip_path = Path(zip_path_str)
+
+        dest_dir_str = QFileDialog.getExistingDirectory(
+            parent=self,
+            caption="Select Destination for Extraction",
+            directory=str(zip_path.parent)
+        )
+
+        if not dest_dir_str:
+            return
+
+        dest_dir = Path(dest_dir_str) / zip_path.stem
+
+        unpackage_exercise_from_zip(
+            zip_filepath=zip_path,
+            destination_directory=dest_dir
+        )
+
+        # TODO: status message instead
+        # msg_text = (
+        #     f"Exercise extracted to:\n{dest_dir}\n\n"
+        #     "Please open this directory as a new Session."
+        # )
+
+        # QMessageBox.information(
+        #     parent=self,
+        #     title="Import Successful",
+        #     text=msg_text
+        # )
 
     def new_answer(self) -> bool:
         """Create a new blank answer for the current exercise."""
