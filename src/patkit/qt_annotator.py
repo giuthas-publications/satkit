@@ -709,7 +709,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.update()
         # In case labels change as new plots are drawn.
-        self.figure.align_ylabels()
+        self.plot_controller.figure.align_ylabels()
         self.update_ui()
 
     def open_file(self):
@@ -1065,7 +1065,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             parent=self,
         )
         if filename is not None:
-            self.figure.savefig(filename, bbox_inches='tight', pad_inches=0.05)
+            self.plot_controller.figure.savefig(
+                filename, bbox_inches='tight', pad_inches=0.05)
             export_session_and_recording_meta(
                 filename=filename,
                 session=self.session,

@@ -910,3 +910,10 @@ class PlotController:
         self.canvas.draw()
 
         self.update_multicursor()
+
+    def display_exclusion(self):
+        """
+        Updates title and graphs to show this Recording is excluded.
+        """
+        # TODO 0.23: do this correctly
+        pass
