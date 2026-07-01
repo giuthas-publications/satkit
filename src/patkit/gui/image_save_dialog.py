@@ -40,6 +40,8 @@ from PyQt6.QtWidgets import (
     QLineEdit, QPushButton, QVBoxLayout, QWidget
 )
 
+# TODO 1.0: docstrings
+
 
 class ImageSaveDialog(QDialog):
 
