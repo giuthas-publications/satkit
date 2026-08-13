@@ -27,13 +27,13 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
-- 0.23.x will improve the annotation GUI by adding missing features like interval
+- 0.23 will add kymography on laryngoscopic and other video data. 
+- 0.24.x will improve the annotation GUI by adding missing features like interval
   selection
-- 0.24 will update configuration handling.
-- 0.25 adds simple ways of opening different kinds of data
-- After this we'll be at 1.0.0-alpha and 1.0.0-beta before release of 1.0.
+- 0.25 will update configuration handling.
+- 0.26 adds simple ways of opening different kinds of data
+- After this we'll be a 1.0.0-rc before release of 1.0.
   - There will be a feature freeze at this point.
-  - The alpha and beta versions will be mainly quality assurance and code clean up.
 
 
 ## [0.22.3] - 2026-06-30
