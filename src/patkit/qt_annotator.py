@@ -203,6 +203,9 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.action_new_exercise.triggered.connect(
             self.new_exercise)
         self.action_save_exercise.triggered.connect(self.save_exercise)
+        self.action_package_exercise.triggered.connect(self.package_exercise)
+        self.action_unpackage_exercise.triggered.connect(
+            self.unpackage_exercise)
         self.action_new_answer.triggered.connect(self.new_answer)
         self.action_save_answer.triggered.connect(self.save_answer)
         self.action_open_answer.triggered.connect(self.open_answer)
@@ -840,7 +843,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         #     text=f"Exercise successfully exported to:\n{zip_path}"
         # )
 
-    def open_zipped_exercise(self) -> None:
+    def unpackage_exercise(self) -> None:
         """
         Prompt the user to extract a zipped exercise and load it.
         """
