@@ -819,7 +819,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         default_name = f"{self.session.name}_exercise.zip"
         default_path = self.session.patkit_path.parent / default_name
 
-        zip_path, include_grids = PackageExerciseDialog.get_export_params(
+        zip_path, include_grids = PackageExerciseDialog.get_packaging_params(
             parent=self,
             default_path=default_path
         )
@@ -831,7 +831,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         package_exercise_to_zip(
             session_path=self.session.patkit_path,
-            zip_filepath=zip_path,
+            zip_path=zip_path,
             active_answer_name=current_answer_name,
             include_textgrids=include_grids
         )

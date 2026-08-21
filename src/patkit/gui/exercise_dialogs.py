@@ -214,7 +214,8 @@ class PackageExerciseDialog(QDialog):
             The default file path to populate the dialog, by default None.
         """
         super().__init__(parent=parent)
-        self.setWindowTitle(title="Package Exercise")
+        self.setWindowTitle("Package Exercise")
+        self.resize(700, 100)
 
         self.package_path: Path | None = None
         self.include_textgrids: bool = False
@@ -222,18 +223,21 @@ class PackageExerciseDialog(QDialog):
         self.path_label = QLabel(text="Package Path:", parent=self)
         self.path_field = QLineEdit(parent=self)
         if default_path is not None:
-            self.path_field.setText(text=str(default_path))
+            self.path_field.setText(str(default_path))
 
         self.browse_button = QPushButton(text="Browse...", parent=self)
         self.browse_button.clicked.connect(slot=self._browse)
 
         path_layout = QHBoxLayout()
-        path_layout.addWidget(widget=self.path_label)
-        path_layout.addWidget(widget=self.path_field)
-        path_layout.addWidget(widget=self.browse_button)
+        path_layout.addWidget(self.path_label)
+        path_layout.addWidget(self.path_field)
+        path_layout.addWidget(self.browse_button)
 
         self.textgrid_checkbox = QCheckBox(
-            text="Include original TextGrids (disable for assignments)",
+            text=(
+                "Include original TextGrids (this will make "
+                "them viewable when running the exercise)."
+            ),
             parent=self
         )
 
@@ -245,10 +249,10 @@ class PackageExerciseDialog(QDialog):
         self.ok_cancel_buttons.accepted.connect(slot=self._on_accepted)
         self.ok_cancel_buttons.rejected.connect(slot=self.reject)
 
-        main_layout = QVBoxLayout(parent=self)
-        main_layout.addLayout(layout=path_layout)
-        main_layout.addWidget(widget=self.textgrid_checkbox)
-        main_layout.addWidget(widget=self.ok_cancel_buttons)
+        main_layout = QVBoxLayout(self)
+        main_layout.addLayout(path_layout)
+        main_layout.addWidget(self.textgrid_checkbox)
+        main_layout.addWidget(self.ok_cancel_buttons)
 
         self.setMinimumWidth(450)
 
@@ -261,7 +265,7 @@ class PackageExerciseDialog(QDialog):
             filter="Zip Files (*.zip)"
         )
         if file_path:
-            self.path_field.setText(text=file_path)
+            self.path_field.setText(file_path)
 
     def _on_accepted(self) -> None:
         """Validate input and accept the dialog."""
