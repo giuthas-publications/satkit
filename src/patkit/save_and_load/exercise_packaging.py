@@ -6,13 +6,14 @@ from zipfile import ZipFile, ZIP_DEFLATED
 from pathlib import Path
 
 from patkit.constants import SourceSuffix
+from patkit.data_structures import FileInformation
 
 
 def package_exercise_to_zip(
-    session_path: Path,
+    file_info: FileInformation,
     zip_path: Path,
     active_answer_name: str,
-    include_textgrids: bool = False,
+    include_root_textgrids: bool = False,
 ) -> None:
     """
     Package a Patkit Session and Exercise into a zip file.
@@ -26,10 +27,11 @@ def package_exercise_to_zip(
     active_answer_name : str
         The name of the specific answer to include in the archive. It will be
         renamed to 'answer' in the resulting zip structure.
-    include_textgrids : bool, optional
+    include_root_textgrids : bool, optional
         Whether to include root-level `.TextGrid` files, by default False.
     """
     with ZipFile(file=zip_path, mode='w', compression=ZIP_DEFLATED) as output:
+        session_path = file_info.patkit_path
         for item in session_path.rglob('*'):
             if not item.is_file():
                 continue
@@ -38,7 +40,7 @@ def package_exercise_to_zip(
 
             # Filter root-level TextGrids
             if (
-                not include_textgrids and
+                not include_root_textgrids and
                 len(rel_path.parts) == 1 and
                 (rel_path.suffix.lower() == SourceSuffix.TEXTGRID.lower())
             ):
@@ -58,6 +60,10 @@ def package_exercise_to_zip(
 
             # Write all other allowed files
             output.write(filename=item, arcname=rel_path)
+        recorded_path = file_info.recorded_path
+        for item in recorded_path.rglob(SourceSuffix.WAV):
+            if not item.is_file():
+                continue
 
 
 def unpackage_exercise_from_zip(

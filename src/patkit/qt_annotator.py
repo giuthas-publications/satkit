@@ -830,10 +830,10 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         current_answer_name = self.session.exercise.current_answer.name
 
         package_exercise_to_zip(
-            session_path=self.session.patkit_path,
+            session_path=self.session.file_info,
             zip_path=zip_path,
             active_answer_name=current_answer_name,
-            include_textgrids=include_grids
+            include_root_textgrids=include_grids
         )
 
         # TODO: status message instead
