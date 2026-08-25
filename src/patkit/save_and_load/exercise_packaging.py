@@ -60,10 +60,12 @@ def package_exercise_to_zip(
 
             # Write all other allowed files
             output.write(filename=item, arcname=rel_path)
+
         recorded_path = file_info.recorded_path
         for item in recorded_path.rglob(SourceSuffix.WAV):
             if not item.is_file():
                 continue
+        # TODO 0.23: if possible verify that wavs or in future other data is included
 
 
 def unpackage_exercise_from_zip(
