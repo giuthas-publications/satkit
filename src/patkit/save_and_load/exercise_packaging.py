@@ -65,7 +65,9 @@ def package_exercise_to_zip(
         for item in recorded_path.rglob(SourceSuffix.WAV):
             if not item.is_file():
                 continue
-        # TODO 0.23: if possible verify that wavs or in future other data is included
+
+        # TODO 0.23: verify that wavs or in future other data files are
+        # included
 
 
 def unpackage_exercise_from_zip(
